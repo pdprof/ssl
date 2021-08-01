@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class HttpsClient
  */
-@WebServlet("/client")
+@WebServlet("/httpsclient")
 public class HttpsClient extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private static SSLSocketFactory wasDefaultSF = null;
