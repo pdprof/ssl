@@ -7,7 +7,7 @@ import java.util.TreeMap;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
@@ -43,27 +43,46 @@ public class SSLSocketClient extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		TreeMap <String, Boolean> map = new TreeMap<String, Boolean>(); 
-		for(String cipher : pdprofSF.getSupportedCipherSuites()) {
-			SSLSocket socket = (SSLSocket) pdprofSF.createSocket("localhost", 9443);
-			String[] ciphers = { cipher };
-			socket.setEnabledCipherSuites(ciphers);
+		String host = request.getParameter("host");
+		if (host == null)
+			host = "localhost";
+		String portStr = request.getParameter("port");
+		int port = 9443;
+		if (portStr != null) {
 			try {
-				socket.startHandshake();
-				if(socket.isConnected())
-					map.put(cipher, Boolean.TRUE);
-				else 
+				port = Integer.parseInt(portStr);
+			} catch (NumberFormatException e) {}
+		}
+		request.setAttribute("host", host);
+		request.setAttribute("port", new Integer(port));
+
+		TreeMap <String, Boolean> map = new TreeMap<String, Boolean>(); 
+		try {
+			for(String cipher : pdprofSF.getSupportedCipherSuites()) {
+				SSLSocket socket = (SSLSocket) pdprofSF.createSocket(host, port);
+				String[] ciphers = { cipher };
+				socket.setEnabledCipherSuites(ciphers);
+				try {
+					socket.startHandshake();
+					if(socket.isConnected())
+						map.put(cipher, Boolean.TRUE);
+					else 
+						map.put(cipher, Boolean.FALSE);
+				} catch (SSLException e) {
 					map.put(cipher, Boolean.FALSE);
-			} catch (SSLHandshakeException e) {
-				map.put(cipher, Boolean.FALSE);
+				}
+				socket.close();
 			}
-			socket.close();
+			for(String key: map.keySet()) {
+				System.out.println(key + ":" + map.get(key));
+			}
+		} catch (Exception e) {
+			map.put(e.getClass().getCanonicalName() + ":" + e.getMessage(), Boolean.FALSE);
 		}
-		for(String key: map.keySet()) {
-			System.out.println(key + ":" + map.get(key));
-		}
-		response.getWriter().append("Hello !! -- Served at: ").append(request.getContextPath());
+		request.setAttribute("ciphers", map);
+		
+		request.getRequestDispatcher("ciphers.jsp").forward(request, response);
+
 	}
 
 	/**
