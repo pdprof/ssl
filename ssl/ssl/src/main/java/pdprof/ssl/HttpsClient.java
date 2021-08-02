@@ -70,7 +70,7 @@ public class HttpsClient extends HttpServlet {
 			con.setHostnameVerifier(new HostnameVerifier() {
 				@Override
 				public boolean verify(String hostname, SSLSession session) {
-					return false;
+					return true;
 				}
             });
 			con.setSSLSocketFactory(pdprofSF);
