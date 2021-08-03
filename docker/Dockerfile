@@ -29,6 +29,6 @@ COPY --chown=1001:0 trapit /config/
 COPY --chown=1001:0 config/server.xml /config/
 COPY --chown=1001:0 config/jvm.options /config/
 COPY --chown=1001:0 apps/ssl.war /config/apps/
-COPY --chown=1001:0 apps/pdprof.war /config/apps/
+COPY --chown=1001:0 apps/pdprof.jar /config/apps/
 
 USER 1001
