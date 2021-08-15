@@ -1,2 +1,2 @@
--Djava.library.path=/config/libs
+-Djavax.net.debug=all
 -Xdump:directory=/pdprof/share
