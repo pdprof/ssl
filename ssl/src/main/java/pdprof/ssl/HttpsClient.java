@@ -52,19 +52,23 @@ public class HttpsClient extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String host = request.getParameter("host");
+		String portStr = request.getParameter("port");
+		int port = request.getServerPort();
 		if (host == null)
-			host = "localhost";
+			host = request.getServerName();
+		if (portStr != null)
+			port = Integer.parseInt(portStr);
 		
 		/*
 		 * Set customer ssl socket factory
 		 */
-		String customStr = request.getParameter("custom");
 		boolean custom = false;
-		if (customStr != null) {
-			if (customStr.equalsIgnoreCase("true")) 
+		String tm = request.getParameter("tm");
+		if (tm.equalsIgnoreCase("custom")) {
 				custom = true;
 		}
-		URL url = new URL("https://" + host + ":" + request.getServerPort());
+		
+		URL url = new URL("https://" + host + ":" + port);
 		HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
 		if(custom == true) {
 			con.setHostnameVerifier(new HostnameVerifier() {
@@ -111,7 +115,6 @@ public class HttpsClient extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 	
