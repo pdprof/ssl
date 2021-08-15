@@ -1,6 +1,6 @@
 # MustGather Hands-On SSL case
 
-## Start db-connections container on docker or openshift
+## Start ssl container on docker or openshift
 
 Follow steps described at parent folder's README 
 

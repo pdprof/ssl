@@ -1,11 +1,11 @@
 # MustGather Hands-On SSL case
 
-## Start db-connections container on docker or openshift
+## Start ssl container on docker or openshift
 
 Follow steps described at parent folder's README 
 
 
-## Access to the servlet to test db operation select/insert/update/dalete
+## Access to the servlet to test HttpsURLConnection class from servlet
 
 Access to following URL by your browser
 
@@ -17,7 +17,7 @@ You can set host, port and trust manager to access from liberty by https.
 You can check that behavior with websphere trace.
 
 
-## Create scripts to access database by multithreads
+## Check SSL server port ciphers by program
 
 Access to following URL by your browser
 
