@@ -11,7 +11,7 @@ Access to following URL by your browser
 
 - http://localhost:10443/ssl/
 
-![httpsclient]:(httpsclient.png)
+![httpsclient](httpsclient.png)
 
 You can set host, port and trust manager to access from liberty by https.
 You can check that behavior with websphere trace.
