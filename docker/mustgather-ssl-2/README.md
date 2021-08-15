@@ -14,3 +14,12 @@ java -jar /config/apps/pdprof.jar localhost 10443
 ```
 
 Please check enabled ciphers from output
+
+
+## Start stand alone java pgoram in a docker
+
+Change directory to the directry which include pdprof.jar and issue following command.
+
+```
+docker run --rm -v `pwd`:/work ibmjava java -jar /work/pdprof.jar <host_ip_of_liberty> 10443
+```
