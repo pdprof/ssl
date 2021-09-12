@@ -10,10 +10,10 @@ git clone https://github.com/pdprof/ssl.git
 
 - Start eclipse
 - Import General > Existing Projects into Workspace
-- Select cloned git directory and db.connections projects and Import
-- right click on db.connections project.
+- Select cloned git directory and ssl projects and Import
+- right click on ssl project.
 - select Maven > Update project 
-- Check db.connections project and push OK button.
+- Check ssl project and push OK button.
 
 
 ## Test your project on your local liberty
